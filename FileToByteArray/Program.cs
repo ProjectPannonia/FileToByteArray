@@ -13,8 +13,9 @@ namespace FileToByteArray
         {
             string filePath = @"C:\FileToArray\c.jpg";
             var fileByteArray = ConvertToByteArray(filePath);
-            string converted = System.Text.Encoding.Default.GetString(fileByteArray);
+            string converted = Encoding.Default.GetString(fileByteArray);
             Console.WriteLine(converted);
+            SaveByteArrayToFileWithBinaryWriter(fileByteArray, @"C:\FileToArray\converted.jpg");
             Console.ReadKey();
         }
         public static byte[] ConvertToByteArray(string filepath)
@@ -22,6 +23,10 @@ namespace FileToByteArray
             byte[] fileByteArray = File.ReadAllBytes(filepath);
             return fileByteArray;
         }
-       
+       public static void SaveByteArrayToFileWithBinaryWriter(byte[] data, string path)
+        {
+            var writer = new BinaryWriter(File.OpenWrite(path));
+            writer.Write(data);
+        }
     }
 }
